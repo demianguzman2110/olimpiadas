@@ -7,20 +7,20 @@ import random
 pygame.init()
 pygame.mixer.init()
 
-# Configuración de archivos de imágenes
+#Configuración de archivos de imágenes
 RUTA_ARCHIVO_FONDO = "ciudad.jpg"
 RUTA_ARCHIVO_UAIBOT = "UAIBOT.png"
 RUTA_ARCHIVO_AUTO = "auto.png"
-RUTA_ARCHIVO_INICIO = "fondo.avif"  # Nueva imagen de pantalla de inicio
+RUTA_ARCHIVO_INICIO = "inicio.jpg"  #Nueva imagen de pantalla de inicio
 
-# Configuración de archivos de sonido
-RUTA_SONIDO_SALTO = "jump.mp3"
-RUTA_SONIDO_GANAR = "win.mp3"
-RUTA_SONIDO_PERDER = "lose.mp3"
-RUTA_SONIDO_POWERUP = "powerup.mp3"  # Nuevo sonido para power-up
-RUTA_MUSICA_FONDO = "background.mp3"
+#Configuración de archivos de sonido
+RUTA_SONIDO_SALTO = "salto.ganar"
+RUTA_SONIDO_GANAR = "ganar.ganar"
+RUTA_SONIDO_PERDER = "perder.ganar"
+RUTA_SONIDO_POWERUP = "powerup.ganar"  #Nuevo sonido para power-up
+RUTA_MUSICA_FONDO = "fondo.mp3"
 
-# Colores
+#Colores
 COLOR_BLANCO = (255, 255, 255)
 COLOR_NEGRO = (0, 0, 0)
 COLOR_ROJO = (200, 0, 0)
@@ -34,27 +34,27 @@ COLOR_BARRA_ENERGIA_FONDO = (100, 100, 100)
 COLOR_BARRA_ENERGIA = (0, 255, 0)
 COLOR_PAUSA_FONDO = (0, 0, 0, 180)
 
-# Configuración de pantalla
+#Configuración de pantalla
 PANTALLA_ANCHO = 1280
 PANTALLA_ALTO = 720
 PISO_POS_Y = 650
 
-# Estados del juego
+#Estados del juego
 ESTADO_INICIO = 0
 ESTADO_INSTRUCCIONES = 1
 ESTADO_JUGANDO = 2
 ESTADO_PAUSA = 3
 ESTADO_FIN = 4
 
-# Configuración de juego
+#Configuración de juego
 clock = pygame.time.Clock()
 FPS = 60
 
-# Inicializar pantalla
+#Inicializar pantalla
 pantalla = pygame.display.set_mode((PANTALLA_ANCHO, PANTALLA_ALTO))
 pygame.display.set_caption("OFIRCA 2025 - Ronda 1 Inicio")
 
-# Cargar imagen de inicio
+#Cargar imagen de inicio
 img_inicio = None
 if os.path.exists(RUTA_ARCHIVO_INICIO):
     try:
@@ -64,7 +64,7 @@ if os.path.exists(RUTA_ARCHIVO_INICIO):
     except pygame.error as e:
         print(f"Error cargando imagen de inicio: {e}")
 
-# Cargar imagen de fondo
+#Cargar imagen de fondo
 img_fondo = None
 if os.path.exists(RUTA_ARCHIVO_FONDO):
     try:
@@ -74,7 +74,7 @@ if os.path.exists(RUTA_ARCHIVO_FONDO):
     except pygame.error as e:
         print(f"Error cargando fondo: {e}")
 
-# Cargar imagen de UAIBOT
+#Cargar imagen de UAIBOT
 img_uaibot = None
 if os.path.exists(RUTA_ARCHIVO_UAIBOT):
     try:
@@ -84,7 +84,7 @@ if os.path.exists(RUTA_ARCHIVO_UAIBOT):
     except pygame.error as e:
         print(f"Error cargando UAIBOT: {e}")
 
-# Cargar imagen de auto
+#Cargar imagen de auto
 img_auto = None
 if os.path.exists(RUTA_ARCHIVO_AUTO):
     try:
@@ -94,7 +94,7 @@ if os.path.exists(RUTA_ARCHIVO_AUTO):
     except pygame.error as e:
         print(f"Error cargando auto: {e}")
 
-# Cargar sonidos
+#Cargar sonidos
 sonido_salto = None
 sonido_ganar = None
 sonido_perder = None
@@ -130,7 +130,7 @@ if os.path.exists(RUTA_SONIDO_POWERUP):
     except pygame.error as e:
         print(f"Error cargando sonido de power-up: {e}")
 
-# Cargar música de fondo
+#Cargar música de fondo
 musica_cargada = False
 if os.path.exists(RUTA_MUSICA_FONDO):
     try:
@@ -141,7 +141,7 @@ if os.path.exists(RUTA_MUSICA_FONDO):
     except pygame.error as e:
         print(f"Error cargando música de fondo: {e}")
 
-# Configuración de fuentes
+#Configuración de fuentes
 font_titulo = pygame.font.SysFont(None, 120)
 font_subtitulo = pygame.font.SysFont(None, 48)
 font_TxtInstrucciones = pygame.font.SysFont(None, 36)
@@ -152,7 +152,7 @@ font_TxtPausa = pygame.font.SysFont(None, 120)
 font_TxtReiniciar = pygame.font.SysFont(None, 48)
 font_puntos = pygame.font.SysFont(None, 28)
 
-# Textos de pantalla de inicio
+#Textos de pantalla de inicio
 txtTitulo = font_titulo.render("UAIBOT DELIVERY", True, COLOR_DORADO)
 txtTitulo_rect = txtTitulo.get_rect(center=(PANTALLA_ANCHO // 2, 150))
 
@@ -165,7 +165,7 @@ txtOpcion2_rect = txtOpcion2.get_rect(center=(PANTALLA_ANCHO // 2, 460))
 txtOpcion3 = font_subtitulo.render("3 - SALIR", True, COLOR_BLANCO)
 txtOpcion3_rect = txtOpcion3.get_rect(center=(PANTALLA_ANCHO // 2, 520))
 
-# Textos de pantalla de instrucciones
+#Textos de pantalla de instrucciones
 txtTituloInst = font_TxtGameOver.render("INSTRUCCIONES", True, COLOR_AMARILLO)
 txtTituloInst_rect = txtTituloInst.get_rect(center=(PANTALLA_ANCHO // 2, 100))
 
@@ -190,11 +190,11 @@ instrucciones_texto = [
     "Presiona cualquier tecla para volver al menú principal"
 ]
 
-# Crear textos de instrucciones
+#Crear textos de instrucciones
 textos_instrucciones = []
 y_pos = 180
 for linea in instrucciones_texto:
-    if linea.strip():  # Si la línea no está vacía
+    if linea.strip():  #Si la línea no está vacía
         if linea.startswith("🎯") or linea.startswith("🕹️") or linea.startswith("⚡"):
             texto = font_TxtInstrucciones.render(linea, True, COLOR_CYAN)
         elif linea.startswith("🏆"):
@@ -207,7 +207,7 @@ for linea in instrucciones_texto:
         textos_instrucciones.append((texto, texto_rect))
     y_pos += 25
 
-# Texto de instrucciones del juego
+#Texto de instrucciones del juego
 txtInstrucciones = font_TxtInstrucciones.render("Usa la barra espaciadora para saltar", True, COLOR_BLANCO)
 txtInstrucciones_desplazamiento = 10
 txtInstrucciones_rect = txtInstrucciones.get_rect()
@@ -218,7 +218,7 @@ fondo_rect = pygame.Rect(txtInstrucciones_rect.left - txtInstrucciones_desplazam
                         txtInstrucciones_rect.width + 2 * txtInstrucciones_desplazamiento,
                         txtInstrucciones_rect.height + 2 * txtInstrucciones_desplazamiento)
 
-# Textos de fin de juego
+#Textos de fin de juego
 txtGameOver = font_TxtGameOver.render("JUEGO TERMINADO", True, COLOR_ROJO)
 txtGameOver_rect = txtGameOver.get_rect(center=(PANTALLA_ANCHO // 2, PANTALLA_ALTO // 2 - 100))
 
@@ -228,7 +228,7 @@ txtExito_rect = txtExito.get_rect(center=(PANTALLA_ANCHO // 2, PANTALLA_ALTO // 
 txtReiniciar = font_TxtReiniciar.render("Presiona 'R' para reiniciar", True, COLOR_BLANCO)
 txtReiniciar_rect = txtReiniciar.get_rect(center=(PANTALLA_ANCHO // 2, PANTALLA_ALTO // 2 + 50))
 
-# Textos de pausa
+#Textos de pausa
 txtPausa = font_TxtPausa.render("PAUSA", True, COLOR_AMARILLO)
 txtPausa_rect = txtPausa.get_rect(center=(PANTALLA_ANCHO // 2, PANTALLA_ALTO // 2 - 100))
 
@@ -238,11 +238,11 @@ txtReanudar_rect = txtReanudar.get_rect(center=(PANTALLA_ANCHO // 2, PANTALLA_AL
 txtSalirPausa = font_TxtContadores.render("Presiona 'Q' para salir", True, COLOR_BLANCO)
 txtSalirPausa_rect = txtSalirPausa.get_rect(center=(PANTALLA_ANCHO // 2, PANTALLA_ALTO // 2 + 50))
 
-# Texto para salir en pantalla de fin de juego
+#Texto para salir en pantalla de fin de juego
 txtSalirFin = font_TxtContadores.render("Presiona 'Q' para salir", True, COLOR_BLANCO)
 txtSalirFin_rect = txtSalirFin.get_rect(center=(PANTALLA_ANCHO // 2, PANTALLA_ALTO // 2 + 100))
 
-# Clase para power-ups
+#Clase para power-ups
 class PowerUp:
     def __init__(self, x, y):
         self.x = x
@@ -257,7 +257,7 @@ class PowerUp:
         
     def dibujar(self, superficie):
         if self.activo:
-            # Crear efecto de brillo
+            #Crear efecto de brillo
             for i in range(3):
                 radio_actual = self.radio - (i * 3)
                 alpha = 255 - (i * 80)
@@ -266,7 +266,7 @@ class PowerUp:
                 s.fill(COLOR_DORADO)
                 superficie.blit(s, (self.x - radio_actual, self.y - radio_actual))
             
-            # Esfera principal
+            #Esfera principal
             pygame.draw.circle(superficie, COLOR_DORADO, (int(self.x), int(self.y)), self.radio)
             pygame.draw.circle(superficie, COLOR_AMARILLO, (int(self.x), int(self.y)), self.radio - 3)
             
@@ -281,30 +281,30 @@ def reiniciar_juego():
     global tiempo_inicio, ultimo_tiempo, sonido_fin_reproducido, espacio_presionado
     global puntos, powerups, tiempo_ultimo_powerup, estado_juego
     
-    # Configuración del robot/UAIBOT
+    #Configuración del robot/UAIBOT
     robot_x = 100
     robot_y = PISO_POS_Y - robot_tamaño
     robot_vel_y = 0
     robot_en_piso = True
     
-    # Configuración de los autos
+    #Configuración de los autos
     auto1_x = PANTALLA_ANCHO
     auto1_y = PISO_POS_Y - auto_alto
     auto2_x = PANTALLA_ANCHO + PANTALLA_ANCHO // 2
     auto2_y = PISO_POS_Y - auto_alto
     auto2_activo = False
     
-    # Configuración de animación de fondo
+    #Configuración de animación de fondo
     fondo_x = 0
     
-    # Configuración de energía y tiempo
+    #Configuración de energía y tiempo
     energia_actual = energia_maxima
     tiempo_inicio = time.time()
     
-    # Configuración de kilómetros
+    #Configuración de kilómetros
     kilometros_restantes = kilometros_objetivo
     
-    # Estados del juego
+    #Estados del juego
     game_over = False
     juego_ganado = False
     ultimo_tiempo = time.time()
@@ -312,28 +312,28 @@ def reiniciar_juego():
     espacio_presionado = False
     estado_juego = ESTADO_JUGANDO
     
-    # Sistema de puntos
+    #Sistema de puntos
     puntos = 0
     powerups = []
     tiempo_ultimo_powerup = time.time()
     
-    # Reiniciar música
-    pygame.mixer.stop()  # Detener todos los sonidos
+    #Reiniciar música
+    pygame.mixer.stop()  #Detener todos los sonidos
     if musica_cargada:
         pygame.mixer.music.play(-1)
         print("Música reiniciada")
 
-# Configuración del robot/UAIBOT (salto más natural)
+#Configuración del robot/UAIBOT (salto más natural)
 robot_tamaño = 50
 robot_x = 100
 robot_y = PISO_POS_Y - robot_tamaño
 robot_vel_y = 0
-robot_salto_normal = -12  # Reducido de -15 para salto más natural
-robot_salto_alto = -18    # Reducido de -22 para salto más natural
-robot_gravedad = 0.6      # Reducido de 0.8 para caída más suave
+robot_salto_normal = -12  #Reducido de -15 para salto más natural
+robot_salto_alto = -18    #Reducido de -22 para salto más natural
+robot_gravedad = 0.6      #Reducido de 0.8 para caída más suave
 robot_en_piso = True
 
-# Configuración de los autos
+#Configuración de los autos
 auto_ancho = 100
 auto_alto = 40
 auto1_x = PANTALLA_ANCHO
@@ -343,27 +343,27 @@ auto2_y = PISO_POS_Y - auto_alto
 auto2_activo = False
 auto_vel_x = 7
 
-# Configuración de animación de fondo
+#Configuración de animación de fondo
 fondo_x = 0
 fondo_vel_x = 2
 
-# Configuración de energía y tiempo
+#Configuración de energía y tiempo
 energia_maxima = 60.0
 energia_actual = energia_maxima
 tiempo_inicio = time.time()
 
-# Configuración de kilómetros
+#Configuración de kilómetros
 kilometros_objetivo = 1.0
 kilometros_restantes = kilometros_objetivo
 kilometros_por_segundo = 0.03
 
-# Sistema de puntos y power-ups
+#Sistema de puntos y power-ups
 puntos = 0
 powerups = []
 tiempo_ultimo_powerup = time.time()
-intervalo_powerup = 8  # Segundos entre power-ups
+intervalo_powerup = 8  #Segundos entre power-ups
 
-# Estados del juego
+#Estados del juego
 estado_juego = ESTADO_INICIO
 juegoEnEjecucion = True
 game_over = False
@@ -372,21 +372,21 @@ ultimo_tiempo = time.time()
 sonido_fin_reproducido = False
 espacio_presionado = False
 
-# Bucle principal del juego
+#Bucle principal del juego
 while juegoEnEjecucion:
     clock.tick(FPS)
     
-    # Manejar eventos según el estado
+    #Manejar eventos según el estado
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             juegoEnEjecucion = False
             
         if event.type == pygame.KEYDOWN:
-            # Salir del juego con 'Q' en cualquier momento
+            #Salir del juego con 'Q' en cualquier momento
             if event.key == pygame.K_q:
                 juegoEnEjecucion = False
             
-            # Estados de menú
+            #Estados de menú
             if estado_juego == ESTADO_INICIO:
                 if event.key == pygame.K_1:
                     reiniciar_juego()
@@ -396,16 +396,16 @@ while juegoEnEjecucion:
                     juegoEnEjecucion = False
             
             elif estado_juego == ESTADO_INSTRUCCIONES:
-                estado_juego = ESTADO_INICIO  # Volver al menú principal
+                estado_juego = ESTADO_INICIO  #Volver al menú principal
             
             elif estado_juego == ESTADO_JUGANDO:
-                # Pausa/Reanudar
+                #Pausa/Reanudar
                 if event.key == pygame.K_p:
                     estado_juego = ESTADO_PAUSA
                     pygame.mixer.music.pause()
                     print("Juego pausado - música pausada")
                 
-                # Salto
+                #Salto
                 if (event.key == pygame.K_SPACE and robot_en_piso and not espacio_presionado):
                     robot_vel_y = robot_salto_normal
                     robot_en_piso = False
@@ -430,16 +430,16 @@ while juegoEnEjecucion:
             if event.key == pygame.K_SPACE:
                 espacio_presionado = False
     
-    # Lógica según el estado del juego
+    #Lógica según el estado del juego
     if estado_juego == ESTADO_INICIO:
-        # Pantalla de inicio
+        #Pantalla de inicio
         if img_inicio:
             pantalla.blit(img_inicio, (0, 0))
         else:
             pantalla.fill(COLOR_NEGRO)
             pantalla.blit(txtTitulo, txtTitulo_rect)
         
-        # Overlay para las opciones
+        #Overlay para las opciones
         overlay = pygame.Surface((400, 200))
         overlay.set_alpha(180)
         overlay.fill(COLOR_NEGRO)
@@ -451,7 +451,7 @@ while juegoEnEjecucion:
         pantalla.blit(txtOpcion3, txtOpcion3_rect)
     
     elif estado_juego == ESTADO_INSTRUCCIONES:
-        # Pantalla de instrucciones
+        #Pantalla de instrucciones
         pantalla.fill(COLOR_NEGRO)
         pantalla.blit(txtTituloInst, txtTituloInst_rect)
         
@@ -459,12 +459,12 @@ while juegoEnEjecucion:
             pantalla.blit(texto, rect)
     
     elif estado_juego == ESTADO_JUGANDO:
-        # Lógica principal del juego
+        #Lógica principal del juego
         tiempo_actual = time.time()
         tiempo_transcurrido = tiempo_actual - ultimo_tiempo
         ultimo_tiempo = tiempo_actual
         
-        # Verificar fin de juego
+        #Verificar fin de juego
         if game_over or juego_ganado:
             estado_juego = ESTADO_FIN
             if not sonido_fin_reproducido:
@@ -476,50 +476,50 @@ while juegoEnEjecucion:
                 sonido_fin_reproducido = True
             continue
         
-        # Actualizar energía
+        #Actualizar energía
         energia_actual -= tiempo_transcurrido
         if energia_actual <= 0:
             energia_actual = 0
             game_over = True
         
-        # Actualizar kilómetros
+        #Actualizar kilómetros
         kilometros_restantes -= kilometros_por_segundo * tiempo_transcurrido
         if kilometros_restantes <= 0:
             kilometros_restantes = 0
             juego_ganado = True
         
-        # Generar power-ups
+        #Generar power-ups
         if tiempo_actual - tiempo_ultimo_powerup > intervalo_powerup:
             powerup_y = random.randint(PISO_POS_Y - 150, PISO_POS_Y - 50)
             powerups.append(PowerUp(PANTALLA_ANCHO, powerup_y))
             tiempo_ultimo_powerup = tiempo_actual
         
-        # Actualizar power-ups
+        #Actualizar power-ups
         for powerup in powerups[:]:
             powerup.mover(auto_vel_x)
             if powerup.x < -30:
                 powerups.remove(powerup)
         
-        # Mover autos
+        #Mover autos
         auto1_x -= auto_vel_x
         auto2_x -= auto_vel_x
         
-        # Auto 1: reaparición
+        #Auto 1: reaparición
         if auto1_x < -auto_ancho:
             auto1_x = PANTALLA_ANCHO
         
-        # Auto 2: activación y reaparición
+        #Auto 2: activación y reaparición
         if auto1_x <= PANTALLA_ANCHO // 2 and not auto2_activo:
             auto2_activo = True
         
         if auto2_activo and auto2_x < -auto_ancho:
             auto2_x = PANTALLA_ANCHO
         
-        # Física del salto
+        #Física del salto
         keys = pygame.key.get_pressed()
         if not robot_en_piso:
             if keys[pygame.K_SPACE] and robot_vel_y < 0:
-                robot_vel_y += robot_gravedad * 0.4  # Gravedad reducida
+                robot_vel_y += robot_gravedad * 0.4  #Gravedad reducida
             else:
                 robot_vel_y += robot_gravedad
             
@@ -530,7 +530,7 @@ while juegoEnEjecucion:
                 robot_vel_y = 0
                 robot_en_piso = True
         
-        # Colisiones con autos
+        #Colisiones con autos
         robot_rect = pygame.Rect(robot_x, robot_y, robot_tamaño, robot_tamaño)
         auto1_rect = pygame.Rect(auto1_x, auto1_y, auto_ancho, auto_alto)
         
@@ -542,7 +542,7 @@ while juegoEnEjecucion:
             if robot_rect.colliderect(auto2_rect):
                 game_over = True
         
-        # Colisiones con power-ups
+        #Colisiones con power-ups
         for powerup in powerups[:]:
             if powerup.activo and robot_rect.colliderect(powerup.get_rect()):
                 puntos += powerup.puntos
@@ -550,7 +550,7 @@ while juegoEnEjecucion:
                 if sonido_powerup:
                     sonido_powerup.play()
         
-        # Dibujar juego
+        #Dibujar juego
         if img_fondo:
             fondo_x -= fondo_vel_x
             if fondo_x <= -PANTALLA_ANCHO:
@@ -562,19 +562,19 @@ while juegoEnEjecucion:
         else:
             pantalla.fill(COLOR_BLANCO)
         
-        # Piso
+        #Piso
         piso_altura = PANTALLA_ALTO - PISO_POS_Y
         piso_rect = pygame.Rect(0, PISO_POS_Y, PANTALLA_ANCHO, piso_altura)
         pygame.draw.rect(pantalla, COLOR_VERDE, piso_rect)
         pygame.draw.line(pantalla, COLOR_NEGRO, (0, PISO_POS_Y), (PANTALLA_ANCHO, PISO_POS_Y), 3)
         
-        # Robot
+        #Robot
         if img_uaibot:
             pantalla.blit(img_uaibot, (robot_x, robot_y))
         else:
             pygame.draw.rect(pantalla, COLOR_AZUL, robot_rect)
         
-        # Autos
+        #Autos
         if img_auto:
             pantalla.blit(img_auto, (auto1_x, auto1_y))
             if auto2_activo:
@@ -584,11 +584,11 @@ while juegoEnEjecucion:
             if auto2_activo:
                 pygame.draw.rect(pantalla, COLOR_ROJO, auto2_rect)
         
-        # Power-ups
+        #Power-ups
         for powerup in powerups:
             powerup.dibujar(pantalla)
         
-        # Barra de energía
+        #Barra de energía
         barra_energia_ancho = 200
         barra_energia_alto = 30
         barra_energia_x = PANTALLA_ANCHO - barra_energia_ancho - 20
@@ -611,45 +611,25 @@ while juegoEnEjecucion:
         pantalla.blit(txt_porcentaje, txt_porcentaje_rect)
         
         #Contador de kilómetros
-        
-        #Dibujar contador de kilómetros
         km_texto = f"Kilómetros restantes: {kilometros_restantes:.2f} km"
         txt_kilometros = font_TxtContadores.render(km_texto, True, COLOR_BLANCO)
-        txt_km_rect = pygame.Rect(20, PANTALLA_ALTO - 60, txt_kilometros.get_width() + 20, 40)
+        txt_km_rect = pygame.Rect(20, PANTALLA_ALTO - 100, txt_kilometros.get_width() + 20, 40)
         pygame.draw.rect(pantalla, COLOR_INSTRUCCION_FONDO, txt_km_rect)
-        pantalla.blit(txt_kilometros, (30, PANTALLA_ALTO - 50))
+        pantalla.blit(txt_kilometros, (30, PANTALLA_ALTO - 90))
         
-        #Dibujar instrucciones solo si el juego está en curso
-        if not game_over and not juego_ganado:
-            pygame.draw.rect(pantalla, COLOR_INSTRUCCION_FONDO, fondo_rect)
-            pantalla.blit(txtInstrucciones, txtInstrucciones_rect)
+        #Contador de puntos
+        puntos_texto = f"Puntos: {puntos}"
+        txt_puntos = font_puntos.render(puntos_texto, True, COLOR_DORADO)
+        txt_puntos_rect = pygame.Rect(20, PANTALLA_ALTO - 140, txt_puntos.get_width() + 20, 30)
+        pygame.draw.rect(pantalla, COLOR_INSTRUCCION_FONDO, txt_puntos_rect)
+        pantalla.blit(txt_puntos, (30, PANTALLA_ALTO - 135))
         
-        #Pantalla de Game Over
-        if game_over:
-            #Fondo semitransparente
-            overlay = pygame.Surface((PANTALLA_ANCHO, PANTALLA_ALTO))
-            overlay.set_alpha(150)
-            overlay.fill(COLOR_NEGRO)
-            pantalla.blit(overlay, (0, 0))
-            
-            pantalla.blit(txtGameOver, txtGameOver_rect)
-            pantalla.blit(txtReiniciar, txtReiniciar_rect)
-            pantalla.blit(txtSalirFin, txtSalirFin_rect)
-        
-        #Pantalla de éxito
-        if juego_ganado:
-            #Fondo semitransparente
-            overlay = pygame.Surface((PANTALLA_ANCHO, PANTALLA_ALTO))
-            overlay.set_alpha(150)
-            overlay.fill(COLOR_NEGRO)
-            pantalla.blit(overlay, (0, 0))
-            
-            pantalla.blit(txtExito, txtExito_rect)
-            pantalla.blit(txtReiniciar, txtReiniciar_rect)
-            pantalla.blit(txtSalirFin, txtSalirFin_rect)
+        #Instrucciones
+        pygame.draw.rect(pantalla, COLOR_INSTRUCCION_FONDO, fondo_rect)
+        pantalla.blit(txtInstrucciones, txtInstrucciones_rect)
     
-    else:  #Juego pausado
-        #Redibujar la última pantalla pero sin actualizaciones
+    elif estado_juego == ESTADO_PAUSA:
+        #Mantener la última imagen del juego pero sin actualizaciones
         if img_fondo:
             fondo_desplazamiento_y = -(PANTALLA_ALTO - PISO_POS_Y)
             pantalla.blit(img_fondo, (fondo_x, fondo_desplazamiento_y))
@@ -657,13 +637,13 @@ while juegoEnEjecucion:
         else:
             pantalla.fill(COLOR_BLANCO)
         
-        #Dibujar elementos estáticos
+        #Elementos estáticos del juego
         piso_altura = PANTALLA_ALTO - PISO_POS_Y
         piso_rect = pygame.Rect(0, PISO_POS_Y, PANTALLA_ANCHO, piso_altura)
         pygame.draw.rect(pantalla, COLOR_VERDE, piso_rect)
         pygame.draw.line(pantalla, COLOR_NEGRO, (0, PISO_POS_Y), (PANTALLA_ANCHO, PISO_POS_Y), 3)
         
-        #Dibujar personajes
+        #Personajes en posición actual
         if img_uaibot:
             pantalla.blit(img_uaibot, (robot_x, robot_y))
         else:
@@ -681,6 +661,10 @@ while juegoEnEjecucion:
                 auto2_rect = pygame.Rect(auto2_x, auto2_y, auto_ancho, auto_alto)
                 pygame.draw.rect(pantalla, COLOR_ROJO, auto2_rect)
         
+        #Power-ups en pausa
+        for powerup in powerups:
+            powerup.dibujar(pantalla)
+        
         #Overlay de pausa
         overlay = pygame.Surface((PANTALLA_ANCHO, PANTALLA_ALTO))
         overlay.set_alpha(180)
@@ -690,6 +674,58 @@ while juegoEnEjecucion:
         pantalla.blit(txtPausa, txtPausa_rect)
         pantalla.blit(txtReanudar, txtReanudar_rect)
         pantalla.blit(txtSalirPausa, txtSalirPausa_rect)
+    
+    elif estado_juego == ESTADO_FIN:
+        #Mantener la última imagen del juego
+        if img_fondo:
+            fondo_desplazamiento_y = -(PANTALLA_ALTO - PISO_POS_Y)
+            pantalla.blit(img_fondo, (fondo_x, fondo_desplazamiento_y))
+            pantalla.blit(img_fondo, (fondo_x + PANTALLA_ANCHO, fondo_desplazamiento_y))
+        else:
+            pantalla.fill(COLOR_BLANCO)
+        
+        #Elementos del juego estáticos
+        piso_altura = PANTALLA_ALTO - PISO_POS_Y
+        piso_rect = pygame.Rect(0, PISO_POS_Y, PANTALLA_ANCHO, piso_altura)
+        pygame.draw.rect(pantalla, COLOR_VERDE, piso_rect)
+        pygame.draw.line(pantalla, COLOR_NEGRO, (0, PISO_POS_Y), (PANTALLA_ANCHO, PISO_POS_Y), 3)
+        
+        if img_uaibot:
+            pantalla.blit(img_uaibot, (robot_x, robot_y))
+        else:
+            robot_rect = pygame.Rect(robot_x, robot_y, robot_tamaño, robot_tamaño)
+            pygame.draw.rect(pantalla, COLOR_AZUL, robot_rect)
+        
+        if img_auto:
+            pantalla.blit(img_auto, (auto1_x, auto1_y))
+            if auto2_activo:
+                pantalla.blit(img_auto, (auto2_x, auto2_y))
+        else:
+            auto1_rect = pygame.Rect(auto1_x, auto1_y, auto_ancho, auto_alto)
+            pygame.draw.rect(pantalla, COLOR_ROJO, auto1_rect)
+            if auto2_activo:
+                auto2_rect = pygame.Rect(auto2_x, auto2_y, auto_ancho, auto_alto)
+                pygame.draw.rect(pantalla, COLOR_ROJO, auto2_rect)
+        
+        #Overlay de fin de juego
+        overlay = pygame.Surface((PANTALLA_ANCHO, PANTALLA_ALTO))
+        overlay.set_alpha(150)
+        overlay.fill(COLOR_NEGRO)
+        pantalla.blit(overlay, (0, 0))
+        
+        #Mostrar puntuación final
+        puntos_final_texto = f"Puntuación Final: {puntos}"
+        txt_puntos_final = font_TxtReiniciar.render(puntos_final_texto, True, COLOR_DORADO)
+        txt_puntos_final_rect = txt_puntos_final.get_rect(center=(PANTALLA_ANCHO // 2, PANTALLA_ALTO // 2 - 20))
+        
+        if game_over:
+            pantalla.blit(txtGameOver, txtGameOver_rect)
+        elif juego_ganado:
+            pantalla.blit(txtExito, txtExito_rect)
+        
+        pantalla.blit(txt_puntos_final, txt_puntos_final_rect)
+        pantalla.blit(txtReiniciar, txtReiniciar_rect)
+        pantalla.blit(txtSalirFin, txtSalirFin_rect)
     
     pygame.display.flip()
 
